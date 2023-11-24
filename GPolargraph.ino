@@ -17,17 +17,11 @@ float originY = 582.2370651203855;
 
 void setup() {
 	polargraph.initPolargraph();
-	//polargraph.setTargetPosition(100-30, 100-25);
 	polargraph.setAngularVel(100);
-	//polargraph.setTargetPosition(originX, originY);
-	//polargraph.computeMovementMetrics();
-	
-	//polargraph.setPosition();
-	
-	//polargraph.moveGondolaDown(100);
-	//polargraph.moveGondolaRight(100);
-	//polargraph.moveGondolaUp(100);
-	//polargraph.moveGondolaLeft(100);
+	polargraph.targetTime = 5;
+	//polargraph.setTargetPosition(originX+coords[0][0], originY+coords[0][1]);
+	polargraph.setTargetPosition(originX, originY-100);
+	polargraph.computeMovementMetrics();
 }
 
 void loop() {
@@ -38,12 +32,22 @@ void loop() {
 	
 	//Serial.println(polargraph.isTargetReached());
 	//polargraph.setTargetPosition(originX+coords[0][track], originY+coords[1][track]);
-	if((polargraph.isTargetReached() || track == 0) && track < coordLen) {
+	/*if((polargraph.isTargetReached() || track == 1) && track < coordLen) {
 		track++;
 		polargraph.targetTime = 5;
 		polargraph.setTargetPosition(originX+coords[track][0], originY+coords[track][1]);
 		polargraph.computeMovementMetrics();
-	}
+	} */
+	
+	/*
+	if(polargraph.isTargetReached()) {
+		track++;
+		polargraph.targetTime = 5;
+		polargraph.setTargetPosition(originX+coords[track][0], originY+coords[track][1]);
+		polargraph.computeMovementMetrics();
+		//Serial.println("Target Reached!");
+	} */
+	
 	polargraph.updatePolargraph();
 	//polargraph.setTargetPosition(200, 200);
 }

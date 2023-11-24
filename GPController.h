@@ -32,11 +32,13 @@ class GPController {
 		float gearDiameter = 12;
 		
 		//Data:
+		int coordIndex = 0;
+		float *coords;
+		
 		bool targetReached = false;
 		float angularVel = 50;
 		
 		float mX = 830;
-		float mY = 1185;
 		
 		float x = 0;
 		float y = 0;
@@ -46,6 +48,10 @@ class GPController {
 		float targetTime = 0.0;
 		
 		//Setters
+		void setCoords(float* c) {
+			coords = c;
+		}
+		
 		void setAngularVel(float vel) {
 			angularVel = vel;
 		}
@@ -55,9 +61,8 @@ class GPController {
 			y = ty;
 		}
 		
-		void setPositionBoundaries(float tx, float ty) {
+		void setPositionBoundaries(float tx) {
 			mX = tx;
-			mY = ty;
 		}
 		
 		void setGearDiameter(float d) {
@@ -80,11 +85,12 @@ class GPController {
 			return pos;
 		}
 		
-		float* getPositionBoundaries() {
-			static float pos[2];
+		float getPositionBoundaries() {
+			/*static float pos[2];
 			pos[0] = mX;
 			pos[1] = mY;
-			return pos;
+			return pos;*/
+			return mX;
 		}
 		
 		float getGearDiameter() {
@@ -192,6 +198,7 @@ class GPController {
 		}
 
 		void computeMovementMetrics() {
+			//Not very efficient but it works yeah
 			//Converts the x and y in mm to ticks
 			//float cmX = 200.0 * mX/(GP_PI*gearDiameter);
 			//float cx = 200.0 * x/(GP_PI*gearDiameter);
@@ -227,7 +234,12 @@ class GPController {
 			LeftStepper.setTargetPosition(a2);
 			RightStepper.setTargetPosition(b2);
 			
-			targetReached = false;
+			/*
+			if(va == 0 && vb == 0) {
+				coordIndex = 0;
+			}
+			else { targetReached = false; }
+			*/
 		}
 
 		void updatePolargraph() {
@@ -287,10 +299,10 @@ class GPController {
 			
 			unsigned long t = millis();
 			LeftStepper.updateStepperPosition(t);
-			RightStepper.updateStepperPosition(t);	
+			RightStepper.updateStepperPosition(t);
 			
-			if (RightStepper.getTargetPosition() == RightStepper.getPosition() && LeftStepper.getTargetPosition() == LeftStepper.getPosition()) { targetReached = true; }
-			else { targetReached = false; }
+			targetReached = false;
+			if (RightStepper.getTargetPosition() == RightStepper.getPosition() && LeftStepper.getTargetPosition() == LeftStepper.getPosition()) { Serial.println("Target Reached"); targetReached = true; }
 		}
 };
 
