@@ -208,15 +208,19 @@ class GPController {
 			float a1 = (LeftStepper.getPosition()/200) * (M_PI*gearDiameter);
 			float a2 = sqrt(x*x + y*y);
 			float va = (a2-a1)/targetTime;
+			/*
 			Serial.println(a1);
 			Serial.println(a2);
+			*/
 			
 			//Right Stepper (B)
 			float b1 = (RightStepper.getPosition()/200) * (M_PI*gearDiameter);
 			float b2 = -sqrt((mX-x)*(mX-x) + y*y);
 			float vb = (b2-b1)/targetTime;
+			/*
 			Serial.println(b1);
 			Serial.println(b2);
+			*/
 
 			va = 200.0 * va/(GP_PI*gearDiameter);
 			vb = 200.0 * vb/(GP_PI*gearDiameter);
@@ -224,9 +228,11 @@ class GPController {
 			a2 = 200.0 * a2/(GP_PI*gearDiameter);
 			b2 = 200.0 * b2/(GP_PI*gearDiameter);
 			
+			/*
 			Serial.println("NEW");
 			Serial.println(a2);
 			Serial.println(b2);
+			*/
 			
 			LeftStepper.speed = abs((long) va);
 			RightStepper.speed = abs((long) vb);	
@@ -302,7 +308,7 @@ class GPController {
 			RightStepper.updateStepperPosition(t);
 			
 			targetReached = false;
-			if (RightStepper.getTargetPosition() == RightStepper.getPosition() && LeftStepper.getTargetPosition() == LeftStepper.getPosition()) { Serial.println("Target Reached"); targetReached = true; }
+			if (RightStepper.getTargetPosition() == RightStepper.getPosition() && LeftStepper.getTargetPosition() == LeftStepper.getPosition()) { targetReached = true; }
 		}
 };
 
